@@ -17,30 +17,36 @@ class Test_create_location:
         Check.check_json_token(post_result, ['status', 'place_id', 'scope', 'reference', 'id'])
 #        token = json.loads(post_result.text)
 #        print(list(token))
+        Check.check_json_value(post_result, 'status', 'OK')
 
         print('GET POST Method')
         get_result = GoogleMapsApi.get_new_location(place_id)
         Check.check_status_code(get_result, 200)
         Check.check_json_token(get_result, ['location', 'accuracy', 'name', 'phone_number', 'address', 'types', 'website', 'language'])
+        Check.check_json_value(get_result, 'address', '29, side layout, cohen 09')
 
         print('PUT Method')
         put_result = GoogleMapsApi.put_new_location(place_id)
         Check.check_status_code(put_result, 200)
         Check.check_json_token(put_result, ['msg'])
+        Check.check_json_value(put_result, 'msg', 'Address successfully updated')
 
         print('GET PUT Method')
         get_result = GoogleMapsApi.get_new_location(place_id)
         Check.check_status_code(get_result, 200)
         Check.check_json_token(get_result, ['location', 'accuracy', 'name', 'phone_number', 'address', 'types', 'website', 'language'])
+        Check.check_json_value(get_result, 'address', '100 Lenina street, RU')
 
         print('DELETE Method')
         delete_result = GoogleMapsApi.delete_new_location(place_id)
         Check.check_status_code(delete_result, 200)
         Check.check_json_token(delete_result, ['status'])
+        Check.check_json_value(delete_result, 'status', 'OK')
 
         print('GET DELETE Method')
         get_result = GoogleMapsApi.get_new_location(place_id)
         Check.check_status_code(get_result, 404)
         Check.check_json_token(get_result, ['msg'])
+        Check.check_json_value(get_result, 'msg', "Get operation failed, looks like place_id  doesn't exists")
 
         print('Test OK')

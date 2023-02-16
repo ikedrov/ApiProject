@@ -15,3 +15,10 @@ class Check:
         token = json.loads(result.text)
         assert list(token) == expected_value
         print('All fields are present.')
+
+    @staticmethod
+    def check_json_value(result, field_name, expected_value):
+        check = result.json()
+        check_info = check.get(field_name)
+        assert check_info == expected_value
+        print(f'{field_name} is right.')
