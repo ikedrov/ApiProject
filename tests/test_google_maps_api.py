@@ -1,12 +1,17 @@
 #python3 -m pytest -s -v
-import json
+#python3 -m pytest --alluredir=test_results/ tests/test_google_maps_api.py
+#allure serve test_results/
 
+import json
+import allure
 from utils.checking import Check
 from utils.api import GoogleMapsApi
 
 
-class Test_create_location:
+@allure.epic('Test create location')
+class TestCreateLocation:
 
+    @allure.description('Test creates, updates and deletes location')
     def test_create_new_location(self):
 
         print('POST Method')
